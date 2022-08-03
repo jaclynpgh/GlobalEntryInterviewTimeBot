@@ -42,13 +42,14 @@ def interviewTimes():
                 client.messages \
                     .create(
                     body=notification + ' Schedule your appointment: ' + 'https://ttp.dhs.gov/schedulerui/schedule-interview/location?lang=en&vo=true&returnUrl=ttp-external&service=UP',
-                    from_='+13163658330',
-                    to='+14129699509'
+                    from_= TWILIO_NUMBER,
+                    to= TO_NUMBER
                 )
 
         else:
             print("{}: No appointments available".format(city))
 
+interviewTimes()
 
 schedule.every(5).seconds.do(interviewTimes)
 while 1:
