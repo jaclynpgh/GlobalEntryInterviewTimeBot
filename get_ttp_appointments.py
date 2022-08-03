@@ -24,7 +24,6 @@ def interviewTimes():
         'Philadelphia': 5445,
         'Baltimore': 7940
     }
-
     print("\nRetrieving Global Entry appointment times...\n")
 
     for city, id in LOCATION_IDS.items():
@@ -38,6 +37,7 @@ def interviewTimes():
             standardTime = convertTimeToStandard(timeOnly)
             notification = "{}: Found an appointment at {}".format(city, dateOnly + " " + standardTime)
             print("{}: Found an appointment at {}".format(city, dateOnly + " " + standardTime))
+            # send text message if it matches one of these cities
             if city == 'Pittsburgh' or city == 'Nashville':
                 client.messages \
                     .create(
@@ -49,7 +49,7 @@ def interviewTimes():
         else:
             print("{}: No appointments available".format(city))
 
-interviewTimes()
+
 
 schedule.every(5).seconds.do(interviewTimes)
 while 1:
