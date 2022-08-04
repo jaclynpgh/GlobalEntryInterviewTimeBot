@@ -15,7 +15,7 @@ pip install -r requirements.txt
 ```
 3. Make a free Twilio account to send text messsages -> https://www.twilio.com/try-twilio
 
-4. Create a secrets.py file locally with:
+4. Create a secret.py file locally with the following variables:
 ```
 ACCOUNT_ID = 'Your Twilio Account ID'
 AUTH_TOKEN = 'Your Twilio Auth Token'
