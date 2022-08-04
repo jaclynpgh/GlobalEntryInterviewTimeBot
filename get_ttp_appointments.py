@@ -4,6 +4,7 @@
 import requests
 import schedule
 import time
+from datetime import datetime, timedelta
 from convertTime import convertTimeToStandard
 from twilio.rest import Client
 from secret import *
@@ -34,26 +35,24 @@ def interviewTimes():
             apptDateTime = str(appointments[0]['startTimestamp'].replace("T", " "))
             timeOnly = apptDateTime.split(' ')[1]
             dateOnly = apptDateTime.split(' ')[0]
+            # so you can set to search by city and month
+            month = dateOnly.split('-')[1]
             standardTime = convertTimeToStandard(timeOnly)
             notification = "{}: Found an appointment at {}".format(city, dateOnly + " " + standardTime)
             print("{}: Found an appointment at {}".format(city, dateOnly + " " + standardTime))
-            # send text message if it matches one of these cities
-            if city == 'Pittsburgh' or city == 'Nashville':
+            # send text message if it matches one of these cities, added conditional to only send text if Nashville has appt. in August
+            if city == 'Pittsburgh' or (city == 'Nashville' and month == '8'):
                 client.messages \
                     .create(
                     body=notification + ' Schedule your appointment: ' + 'https://ttp.dhs.gov/schedulerui/schedule-interview/location?lang=en&vo=true&returnUrl=ttp-external&service=UP',
-                    from_= TWILIO_NUMBER,
-                    to= TO_NUMBER
+                    from_=TWILIO_NUMBER,
+                    to=TO_NUMBER
                 )
-
         else:
             print("{}: No appointments available".format(city))
-
 
 
 schedule.every(5).seconds.do(interviewTimes)
 while 1:
     schedule.run_pending()
     time.sleep(1)
-
-
