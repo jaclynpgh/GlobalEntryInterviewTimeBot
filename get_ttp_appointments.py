@@ -41,7 +41,7 @@ def interviewTimes():
             notification = "{}: Found an appointment at {}".format(city, dateOnly + " " + standardTime)
             print("{}: Found an appointment at {}".format(city, dateOnly + " " + standardTime))
             # send text message if it matches one of these cities, added conditional to only send text if Nashville has appt. in August
-            if city == 'Pittsburgh' or (city == 'Nashville' and month == '8'):
+            if city == 'Pittsburgh' or (city == 'Nashville' and month == '08'):
                 client.messages \
                     .create(
                     body=notification + ' Schedule your appointment: ' + 'https://ttp.dhs.gov/schedulerui/schedule-interview/location?lang=en&vo=true&returnUrl=ttp-external&service=UP',
