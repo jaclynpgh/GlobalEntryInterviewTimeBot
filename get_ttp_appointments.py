@@ -11,8 +11,8 @@ from secret import *
 
 
 # Find your Account SID and Auth Token at twilio.com/console
-# and set the environment variables. See http://twil.io/secure
-# imported from a secret.py file locally
+# and set the variables. See http://twil.io/secure
+# variables imported from a secret.py file locally
 def interviewTimes():
     account_sid = ACCOUNT_ID
     auth_token = AUTH_TOKEN
@@ -22,8 +22,6 @@ def interviewTimes():
     LOCATION_IDS = {
         'Pittsburgh': 9200,
         'Nashville': 10260,
-        'Philadelphia': 5445,
-        'Baltimore': 7940
     }
     print("\nRetrieving Global Entry appointment times...\n")
 
@@ -37,14 +35,18 @@ def interviewTimes():
             dateOnly = apptDateTime.split(' ')[0]
             # so you can set to search by city and month
             month = dateOnly.split('-')[1]
+            day = dateOnly.split('-')[2]
             standardTime = convertTimeToStandard(timeOnly)
             notification = "{}: Found an appointment at {}".format(city, dateOnly + " " + standardTime)
             print("{}: Found an appointment at {}".format(city, dateOnly + " " + standardTime))
             # send text message if it matches one of these cities, added conditional to only send text if Nashville has appt. in August
-            if city == 'Pittsburgh' or (city == 'Nashville' and month == '8'):
+            if (city == 'Pittsburgh' and month == '08') or (city == 'Pittsburgh' and month == '09') or (
+                    city == 'Nashville' and month == '08' and day == '12') or (
+                    city == 'Nashville' and month == '08' and day == '14') or (
+                    city == 'Nashville' and month == '08' and day == '15'):
                 client.messages \
                     .create(
-                    body=notification + ' Schedule your appointment: ' + 'https://ttp.dhs.gov/schedulerui/schedule-interview/location?lang=en&vo=true&returnUrl=ttp-external&service=UP',
+                    body=notification + ' Schedule your appointment: ' + 'https://ttp.cbp.dhs.gov/',
                     from_=TWILIO_NUMBER,
                     to=TO_NUMBER
                 )
