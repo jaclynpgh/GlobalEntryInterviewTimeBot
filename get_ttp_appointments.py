@@ -44,7 +44,6 @@ def interviewTimes():
                     city == 'Nashville' and month == '08' and day == '12') or (
                     city == 'Nashville' and month == '08' and day == '14') or (
                     city == 'Nashville' and month == '08' and day == '15'):
-            if city == 'Pittsburgh' or (city == 'Nashville' and month == '08'):
                 client.messages \
                     .create(
                     body=notification + ' Schedule your appointment: ' + 'https://ttp.cbp.dhs.gov/',
